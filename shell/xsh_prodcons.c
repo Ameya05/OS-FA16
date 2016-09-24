@@ -6,6 +6,8 @@ int n;                 //Definition for global variable 'n'
 
 shellcmd xsh_prodcons(int nargs, char *args[])
 {
+	//function to check if the argument is numeric
+	//Returns 1: False, 0: True
 	int isNum(char num[])
 	{
 		int x = 0;
@@ -18,25 +20,32 @@ shellcmd xsh_prodcons(int nargs, char *args[])
 		return 0;
 	} 
 	
-	//Argument verifications and validations
-	if (nargs == 2 && strncmp( args[1] , "--help", 7) == 0) 
+	void printUsage()
 	{
 		printf("Usage: %s\n\n", args[0]);
 		printf("Description:\n");
 		printf("\tRuns the Producer & Consumer for n count\n");
 		printf("\tn: int, Optional integer param to this command\n");
 		printf("\t--help\tdisplay this help and exit\n");
-		return 0;
 	}
 
-	if ( isNum(args[1]) == 1 )
+	//if --help is used, then print out help doc
+	if (nargs == 2 && strncmp( args[1] , "--help", 7) == 0) 
 	{
-		printf("usage: prodcons [n] \n\tn: positive integer\n\t   defaults to 2000\n");
+		printUsage();
+		return;
+	}
+	
+	//If More than 1 argument is supplied or argument is not numeric, then print usage
+	if ( (nargs > 2) || ( ( nargs == 2) && ( isNum(args[1]) == 1 ) ) )
+	{
+		printUsage();
 		return;
 	}
 	
 
   	int count = 2000;             //local varible to hold count
+	
 	if  ( nargs == 2 )
 		count = atoi(args[1]);
    
