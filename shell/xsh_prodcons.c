@@ -2,15 +2,17 @@
 #include <prodcons.h>
 #include <ctype.h>
 
-int n;                 //Definition for global variable 'n'
+int32 n;                 //Definition for global variable 'n'
 
-shellcmd xsh_prodcons(int nargs, char *args[])
+sid32 produced, consumed;
+
+shellcmd xsh_prodcons(int32 nargs, char *args[])
 {
 	//function to check if the argument is numeric
 	//Returns 1: False, 0: True
-	int isNum(char num[])
+	int32 isNum(char num[])
 	{
-		int x = 0;
+		int32 x = 0;
 		
 		for ( ; num[x] != 0; x++)
 		{
@@ -22,7 +24,7 @@ shellcmd xsh_prodcons(int nargs, char *args[])
 	
 	void printUsage()
 	{
-		printf("Usage: %s\n\n", args[0]);
+		printf("Usage: %s [n]\n\n", args[0]);
 		printf("Description:\n");
 		printf("\tRuns the Producer & Consumer for n count\n");
 		printf("\tn: int, Optional integer param to this command\n");
@@ -43,8 +45,10 @@ shellcmd xsh_prodcons(int nargs, char *args[])
 		return;
 	}
 	
+	produced = semcreate(0);
+	consumed = semcreate(1);
 
-  	int count = 2000;             //local varible to hold count
+  	int32 count = 2000;             //local varible to hold count
 	
 	if  ( nargs == 2 )
 		count = atoi(args[1]);
