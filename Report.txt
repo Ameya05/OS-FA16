@@ -28,3 +28,6 @@ We are creating counting semaphores which are essentially keeping track of the t
 
 As there are 2 critical sections which have to access the same shared resource n,
 we need 2 semaphores to ensure synchronization and hence synchronization can not be achieved by using one semaphore.
+
+
+>>>> Contribution - 100% since I am doing the assignments alone.
