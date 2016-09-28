@@ -1,0 +1,21 @@
+Does your program output any garbage? If yes, why?
+- Yes the program does output garbage values. Reason being that the producer consumer processes are not synchronized. As a result, the producer floods the global variable. When the consumer ultimately gets the control, producer has updated the global variable multiple times and hence garbage values are printed.
+
+Are all the produced values getting consumed?
+- Since the producer starts first and it produces values continuously, till the time consumer starts consuming, many values are lost as a result of the producer overwriting the global variable.
+
+functions created - 
+
+	int isNum(char num[])
+	{
+		int x = 0;
+		
+		for ( ; num[x] != 0; x++)
+		{
+		        if (!isdigit(num[x]))
+				return 1;
+		}
+		return 0;
+	} 
+
+Contribution - 100% since I am doing the assignments alone.
