@@ -1,21 +1,33 @@
-Does your program output any garbage? If yes, why?
-- Yes the program does output garbage values. Reason being that the producer consumer processes are not synchronized. As a result, the producer floods the global variable. When the consumer ultimately gets the control, producer has updated the global variable multiple times and hence garbage values are printed.
 
-Are all the produced values getting consumed?
-- Since the producer starts first and it produces values continuously, till the time consumer starts consuming, many values are lost as a result of the producer overwriting the global variable.
 
-functions created - 
+>>>>>How exactly is sychronization achieved using semaphore in our assignnment?
 
-	int isNum(char num[])
-	{
-		int x = 0;
-		
-		for ( ; num[x] != 0; x++)
-		{
-		        if (!isdigit(num[x]))
-				return 1;
-		}
-		return 0;
-	} 
+The 2 semaphores (produced, consumed) indicate the resources available for producing or consuming.
+When we initialize produced(0) it means that initially there is no producer available, consumed(1) means that there is 1 consumer available for consumption.
+The produce function is waiting for the consumer to be available through the following command - wait(consumed) 
+The consume function is waiting for the producer to produce something through the following - wait(produced)
 
-Contribution - 100% since I am doing the assignments alone.
+1. Since the "consumed" semaphore has value 1, the produce function proceeds into the critical section which decrements the "consumed" to value 0.
+The produce function produces a value and then increments the semaphore "produced" to 1 via the signal(produced) command.
+
+2. Now the consume function which was waiting for "produced" semaphore sees that the semaphore value is 1 and it proceeds to its critical section.
+Once it consumes the value, it then increments the semaphore "consumed" to 1 via the signal(consumed) command. 
+
+The above steps repeat till the producer has some value to produce. 
+Thus synchronization is achieved since there is only 1 critical section being executed at at time.
+i.e. The Producer & Consumer take turns in performing their tasks, 
+
+
+
+>>>>>Can the above sychronization be achieved with just one semaphore? Why or why not?
+
+There are 2 critical sections in consideration. The section where Producer produces and other where the Consumer consumes.
+To guaranttee syncronization , we need to make sure that these 2 critical sections execute in an alternate manner.
+i.e. if any value is produced, the consumer should immediately consume it before the producer produces another value.
+We are creating counting semaphores which are essentially keeping track of the the producer and consumer individually.
+
+As there are 2 critical sections which have to access the same shared resource n,
+we need 2 semaphores to ensure synchronization and hence synchronization can not be achieved by using one semaphore.
+
+
+>>>> Contribution - 100% since I am doing the assignments alone.
