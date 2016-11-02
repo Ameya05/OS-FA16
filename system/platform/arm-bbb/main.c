@@ -23,7 +23,7 @@ process	main(void)
  */
   
   /* Start the network */
-  netstart(bbb_ipaddr,bbb_router);
+  //netstart(bbb_ipaddr,bbb_router);
   kprintf("\n...creating a shell\n");
   recvclr();
   resume(create(shell, 8192, 50, "shell", 1, CONSOLE));
