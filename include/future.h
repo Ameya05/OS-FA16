@@ -1,3 +1,4 @@
+#include <my_queue.h>
 #ifndef _FUTURE_H_
 #define _FUTURE_H_
  
@@ -7,7 +8,9 @@
 #define FUTURE_VALID 	  2         
 
 /* modes of operation for future*/
-#define FUTURE_EXCLUSIVE  1	
+#define FUTURE_EXCLUSIVE  1
+#define FUTURE_SHARED     2	    
+#define FUTURE_QUEUE      3 
 
 typedef struct futent
 {
@@ -15,6 +18,8 @@ typedef struct futent
    int flag;		
    int state;         	
    pid32 pid;
+   struct queueFuture* set_queue;
+   struct queueFuture* get_queue;
 } future;
 
 /* Interface for system call */

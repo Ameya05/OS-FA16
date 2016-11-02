@@ -1,6 +1,5 @@
 #include <xinu.h>
 #include <prodcons.h>
-#include <future.h>
 
 uint future_prod(future *fut) {
   int i, j;
