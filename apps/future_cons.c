@@ -9,6 +9,6 @@ uint future_cons(future *fut) {
     kprintf("future_get failed\n");
     return -1;
   }
-  kprintf("it produced %d\n", i);
+  kprintf("it produced %d\n",i);
   return OK;
 }

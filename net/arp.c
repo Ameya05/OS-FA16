@@ -95,6 +95,7 @@ status	arp_resolve (
 	arptr->arstate = AR_PENDING;
 	arptr->arpaddr = nxthop;
 	arptr->arpid = currpid;
+	arptr->timestamp = clktime;
 
 	/* Hand-craft an ARP Request packet */
 
@@ -250,6 +251,7 @@ void	arp_in (
 		}
 		arptr = &arpcache[slot];
 		arptr->arpaddr = pktptr->arp_sndpa;
+		arptr->timestamp = clktime;
 		memcpy(arptr->arhaddr, pktptr->arp_sndha, ARP_HALEN);
 		arptr->arstate = AR_RESOLVED;
 	}

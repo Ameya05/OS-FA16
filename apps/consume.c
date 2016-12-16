@@ -1,19 +1,28 @@
 #include <xinu.h>
 #include <prodcons.h>
 
-/*  
-*  Consumer function to consume values "count" times 
-*/
-void consumer(int32 count) {
+ void consumer(int count){
+  
+	while(1){
 
-	if (count <1 )
-		return;
+		sleep(1);
 
-	for (int32 i=0; i < count ; i++)
-	{
 		wait(produced);
-		printf("\nconsumed : %d", n );
+		printf("consumed value : %d \n", n);
+		
+		if(n == count){
+			break;
+		}
+
 		signal(consumed);
 	}
-	printf("\n");
+
+	printf("Consumer stopped.\n");
+	
+	printf("Deleting semaphores.\n");
+
+	semdelete(produced);
+	semdelete(consumed);
+
+	printf("Semaphores deleted.\n");
 }

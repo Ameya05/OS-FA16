@@ -31,6 +31,7 @@ void	net_init (void)
 
 	netbufpool = mkbufpool(PACKLEN, nbufs);
 
+
 	/* Initialize the ARP cache */
 
 	arp_init();
@@ -86,6 +87,12 @@ process	netin ()
 		retval = read(ETHER0, (char *)pkt, PACKLEN);
 		if(retval == SYSERR) {
 			panic("Cannot read from Ethernet\n");
+		}
+
+		for (int i = 0; i<= ARP_SIZ; i++){
+			if(clktime - arpcache[i].timestamp > 300 && arpcache[i].arstate != AR_FREE){
+				arpcache[i].arstate = AR_FREE;
+			}
 		}
 
 		/* Convert Ethernet Type to host order */

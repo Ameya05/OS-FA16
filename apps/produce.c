@@ -1,20 +1,19 @@
 #include <xinu.h>
 #include <prodcons.h>
 
-/*
-* Producer function to produce values "count" times
-*/
-
-void producer(int32 count) {
+void producer(int count){  
 	
-	if (count <1 )
-		return;
+	while(n < count){
 
-	for (int32 i=0 ; i< count ; i++)
-	{
+		sleep(1);
+
 		wait(consumed);
-		n = i ;
-		printf("\nproduced : %d", n );
+		n++;		
+		printf("Produced value : %d \n", n);
+
 		signal(produced);
+		
 	}
+
+	printf("Producer stopped.\n");
 }
