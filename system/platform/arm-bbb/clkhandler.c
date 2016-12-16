@@ -1,6 +1,9 @@
 /* clkhandler.c - clkhandler */
 
 #include <xinu.h>
+int clear_arp(void);
+struct arpentry arpcache[ARP_SIZ];
+
 
 /*-----------------------------------------------------------------------
  * clkhandler - high level clock interrupt handler
@@ -31,6 +34,7 @@ void	clkhandler()
 
 	if(count1000 == 0) {
 		clktime++;
+		remove_arp_cache_entry();
 		count1000 = 1000;
 	}
 
@@ -54,4 +58,20 @@ void	clkhandler()
 		preempt = QUANTUM;
 		resched();
 	}
+}
+
+int remove_arp_cache_entry(void)
+{
+	int32 arp_index;
+	for(arp_index=0; arp_index<ARP_SIZ; arp_index++)
+	{
+		if(arpcache[arp_index].arstate != AR_FREE)
+		{  
+			if((clktime - arpcache[arp_index].timestamp) >= ARP_TIMEOUT)
+			{
+				arpcache[arp_index].arstate = AR_FREE;           
+			}
+        	}
+ 	}
+    return 1;
 }
